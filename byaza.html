@@ -48,7 +48,7 @@
 	<script type="text/javascript" src="js/leaflet-color-markers.js"></script>
     
     <!-- Link to Interactive Campaign Map JS file with our code for displaying the interactive map. -->
-	<script type="text/javascript" src="js/badlands-map.js"></script>
+	<script type="text/javascript" src="js/byaza-map.js"></script>
 	
 	<script type="text/javascript" src="google-doc-url.js"></script>
 	
@@ -58,11 +58,11 @@
 	
 	<script type='text/javascript'>
 		function callback(data, tabletop) {
-		//addGroups(data["Group Names"].elements, tabletop);
-		addBadlands(data["Markers"].elements, tabletop);
+			//addGroups(data["Group Names"].elements, tabletop);
+			addByaza(data["Byaza Markers"].elements, tabletop);
 		}
 		
-		function addBadlands(data, tabletop) {
+		function addByaza(data, tabletop) {
 		for(i = 0; i < data.length; i++) {
 			if (data[i].Color) { color = data[i].Color.toLowerCase() + 'Icon'; } else { color = 'blackIcon'; }
 			if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }

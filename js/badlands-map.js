@@ -34,7 +34,7 @@ var towns = L.layerGroup();
 map.addLayer(poi);
 map.addLayer(towns);
 
-var overlayMaps = {
+var badlandsMaps = {
 	"Towns" : towns,
 	"Points of Interest": poi
 	};
@@ -53,4 +53,4 @@ function addGroups(data, tabletop) {
 }
 */
 // Creates a switchable layers control from baseMaps and overlayMaps and adds them to map.
-L.control.layers(baseMaps, overlayMaps).addTo(map);
+L.control.layers(baseMaps, badlandsMaps).addTo(map);
