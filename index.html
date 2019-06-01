@@ -63,7 +63,7 @@
 		for(i = 0; i < data.length; i++) {
 			if (data[i].Color) { color = data[i].Color.toLowerCase() + 'Icon'; } else { color = 'blackIcon'; }
 			if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }
-			L.marker([-data[i].X,data[i].Y], {icon: window[color]}).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
+			L.marker([-data[i].Y,data[i].X], {icon: window[color]}).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
 			}
 			
 		//alert('Successfully processed!')
