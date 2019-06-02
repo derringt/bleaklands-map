@@ -90,6 +90,7 @@ map.on('baselayerchange', function(e) {
 			break;
 		default:
 	}
+	map.setView([-96,128],2);
 });
 
 function swapMap(name) {
