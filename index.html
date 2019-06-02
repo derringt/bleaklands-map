@@ -46,9 +46,11 @@
     <script type="text/javascript" src="js/L.tileLayer.zoomify.js"></script>
 	
 	<script type="text/javascript" src="js/leaflet-color-markers.js"></script>
+	
+	<script type='text/javascript' src="js/ActiveLayers.js"></script>
     
     <!-- Link to Interactive Campaign Map JS file with our code for displaying the interactive map. -->
-	<script type="text/javascript" src="js/badlands-map.js"></script>
+	<script type="text/javascript" src="js/map-setup.js"></script>
 	
 	<script type="text/javascript" src="google-doc-url.js"></script>
 	
@@ -57,21 +59,6 @@
 	<script type='text/javascript' src="js/L.Control.MousePosition.js"></script>
 	
 	<script type='text/javascript'>
-		function callback(data, tabletop) {
-		//addGroups(data["Group Names"].elements, tabletop);
-		addBadlands(data["Markers"].elements, tabletop);
-		}
-		
-		function addBadlands(data, tabletop) {
-		for(i = 0; i < data.length; i++) {
-			if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
-			
-			if (data[i].Color) { color = data[i].Color.toLowerCase() + 'Icon'; } else { color = 'blackIcon'; }
-			if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }
-			L.marker([-data[i].Y,data[i].X], {icon: window[color]}).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-			}
-		}
-
 		window.addEventListener('DOMContentLoaded', init)
 		L.control.mousePosition().addTo(map);
 	</script>
