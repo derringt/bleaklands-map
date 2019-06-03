@@ -50,6 +50,8 @@ var baseMaps = {
 
 var poi = L.layerGroup();
 var towns = L.layerGroup();
+var worldtour = L.layerGroup();
+var traderoute = L.layerGroup();
 var byazaMarkers = L.layerGroup();
 var solitudeMarkers = L.layerGroup();
 var meridiemMarkers = L.layerGroup();
@@ -57,11 +59,13 @@ var meridiemMarkers = L.layerGroup();
 map.addLayer(poi);
 map.addLayer(towns);
 
-var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers };
+var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour };
 
 var badlandsMarkers = {
 	"Towns" : towns,
-	"Points of Interest": poi
+	"Points of Interest": poi,
+	"Badlands Trade Routes": traderoute,
+	"Badlands World Tour Route": worldtour,
 	};
 
 var control = L.control.activeLayers(baseMaps, badlandsMarkers, {collapsed: false});
@@ -81,6 +85,8 @@ map.on('baselayerchange', function(e) {
 			towns.addTo(map);
 			control.addOverlay(towns, "Towns");
 			control.addOverlay(poi, "Points of Interest");
+			control.addOverlay(traderoute, "Badlands Trade Routes");
+			control.addOverlay(worldtour, "Badlands World Tour Route");
 			break;
 		case 'Solitude':
 			solitudeMarkers.addTo(map);
