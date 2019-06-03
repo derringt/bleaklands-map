@@ -59,7 +59,7 @@ var meridiemMarkers = L.layerGroup();
 map.addLayer(poi);
 map.addLayer(towns);
 
-var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour };
+var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute };
 
 var badlandsMarkers = {
 	"Towns" : towns,
