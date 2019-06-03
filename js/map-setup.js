@@ -54,12 +54,13 @@ var worldtour = L.layerGroup();
 var traderoute = L.layerGroup();
 var byazaMarkers = L.layerGroup();
 var solitudeMarkers = L.layerGroup();
+var thuvim = L.layerGroup();
 var meridiemMarkers = L.layerGroup();
 
 map.addLayer(poi);
 map.addLayer(towns);
 
-var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute };
+var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute, thuvim };
 
 var badlandsMarkers = {
 	"Towns" : towns,
@@ -90,6 +91,7 @@ map.on('baselayerchange', function(e) {
 			break;
 		case 'Solitude':
 			solitudeMarkers.addTo(map);
+			control.addOverlay(thuvim, "Thuvim's Expedition");
 			break;
 		case 'Meridiem':
 			meridiemMarkers.addTo(map);

@@ -10,6 +10,7 @@ function callback(data, tabletop) {
 	addSolitude(data["Solitude Markers"].elements, tabletop);
 	addMeridiem(data["Meridiem Markers"].elements, tabletop);
 	addBadlandsRoutes(data["Badlands Routes"].elements, tabletop);
+	addSolitudeRoutes(data["Solitude Routes"].elements, tabletop);
 }
 
 function convertToIntPairArray(dict) {
@@ -65,6 +66,18 @@ function addMeridiem(data, tabletop) {
 }
 
 function addBadlandsRoutes(data, tabletop) {
+	for(i = 0; i < data.length; i++) {
+		if (!data[i].MarkerX || !data[i].Name || !data[i].MarkerY) { continue; }
+		
+		if (data[i].Color) { lineColor = data[i].Color.toLowerCase(); } else { lineColor = 'blue'; }
+		if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }
+		var waypointLine = convertToIntPairArray(data[i]);
+		L.polyline(waypointLine, { color: lineColor }).addTo(group);
+		L.marker([-data[i].MarkerY,data[i].MarkerX], { icon: window[ lineColor + 'Icon' ] }).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
+	}
+}
+
+function addSolitudeRoutes(data, tabletop) {
 	for(i = 0; i < data.length; i++) {
 		if (!data[i].MarkerX || !data[i].Name || !data[i].MarkerY) { continue; }
 		
