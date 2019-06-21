@@ -5,12 +5,13 @@ function init() {
 }
 
 function callback(data, tabletop) {
-	addBadlands(data["Markers"].elements, tabletop);
+	addBadlands(data["Badlands Markers"].elements, tabletop);
 	addByaza(data["Byaza Markers"].elements, tabletop);
 	addSolitude(data["Solitude Markers"].elements, tabletop);
 	addMeridiem(data["Meridiem Markers"].elements, tabletop);
 	addBadlandsRoutes(data["Badlands Routes"].elements, tabletop);
 	addSolitudeRoutes(data["Solitude Routes"].elements, tabletop);
+	addMorra(data["Morra Markers"].elements, tabletop);
 }
 
 function convertToIntPairArray(dict) {
@@ -86,5 +87,14 @@ function addSolitudeRoutes(data, tabletop) {
 		var waypointLine = convertToIntPairArray(data[i]);
 		L.polyline(waypointLine, { color: lineColor }).addTo(group);
 		L.marker([-data[i].MarkerY,data[i].MarkerX], { icon: window[ lineColor + 'Icon' ] }).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
+	}
+}
+
+function addMorra(data, tabletop) {
+	for(i = 0; i < data.length; i++) {
+		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
+		
+		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
+		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(morraMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
 	}
 }

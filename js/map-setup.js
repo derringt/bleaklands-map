@@ -40,11 +40,18 @@ var meridiem = L.tileLayer.zoomify('./meridiem-map/{g}/{z}-{x}-{y}.jpg', {
     tolerance: 0.9, 
     });
 
+var morra = L.tileLayer.zoomify('./morra-map/{g}/{z}-{x}-{y}.jpg', {
+    width: 2048,                                                                                        // MUST be defined.
+    height: 1536,                                                                                       // MUST be defined.
+    tolerance: 0.9, 
+    });
+
 // Creates baseMaps layer and passes which maps to include in the layers control.
 var baseMaps = {
     "The Badlands": badlands,
-	"Byaza": byaza,
-	"Meridiem": meridiem,
+	"The Continent of Morra": morra,
+	"The Arkevian Ruins of Byaza": byaza,
+	"The Underground City of Meridiem": meridiem,
 	"Solitude": solitude,
 	};
 
@@ -56,11 +63,12 @@ var byazaMarkers = L.layerGroup();
 var solitudeMarkers = L.layerGroup();
 var thuvim = L.layerGroup();
 var meridiemMarkers = L.layerGroup();
+var morraMarkers = L.layerGroup();
 
 map.addLayer(poi);
 map.addLayer(towns);
 
-var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute, thuvim };
+var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute, thuvim, morraMarkers };
 
 var badlandsMarkers = {
 	"Towns" : towns,
@@ -78,7 +86,7 @@ map.on('baselayerchange', function(e) {
 		control.removeLayer(allLayers[layerGroup]);
 	}
 	switch(e.name) {
-		case 'Byaza':
+		case 'The Arkevian Ruins of Byaza':
 			byazaMarkers.addTo(map);
 			break;
 		case 'The Badlands':
@@ -93,8 +101,11 @@ map.on('baselayerchange', function(e) {
 			solitudeMarkers.addTo(map);
 			control.addOverlay(thuvim, "Thuvim's Expedition");
 			break;
-		case 'Meridiem':
+		case 'The Underground City of Meridiem':
 			meridiemMarkers.addTo(map);
+			break;
+		case 'The Continent of Morra':
+			morraMarkers.addTo(map);
 			break;
 		default:
 	}
@@ -108,16 +119,20 @@ function swapMap(name) {
 			layerControlElement.getElementsByTagName('input')[0].click();
 			return false;
 			break;
-		case 'Byaza':
+		case 'Morra':
 			layerControlElement.getElementsByTagName('input')[1].click();
 			return false;
 			break;
-		case 'Meridiem':
+		case 'Byaza':
 			layerControlElement.getElementsByTagName('input')[2].click();
 			return false;
 			break;
-		case 'Solitude':
+		case 'Meridiem':
 			layerControlElement.getElementsByTagName('input')[3].click();
+			return false;
+			break;
+		case 'Solitude':
+			layerControlElement.getElementsByTagName('input')[4].click();
 			return false;
 			break;			
 		default:
