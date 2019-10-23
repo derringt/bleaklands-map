@@ -7,10 +7,10 @@ function init() {
 function callback(data, tabletop) {
 	addBadlands(data["Badlands Markers"].elements, tabletop);
 	addByaza(data["Byaza Markers"].elements, tabletop);
-	addSolitude(data["Solitude Markers"].elements, tabletop);
+	addPassages(data["Passages Markers"].elements, tabletop);
 	addMeridiem(data["Meridiem Markers"].elements, tabletop);
 	addBadlandsRoutes(data["Badlands Routes"].elements, tabletop);
-	addSolitudeRoutes(data["Solitude Routes"].elements, tabletop);
+	addPassagesRoutes(data["Passages Routes"].elements, tabletop);
 	addMorra(data["Morra Markers"].elements, tabletop);
 }
 
@@ -48,12 +48,12 @@ function addBadlands(data, tabletop) {
 	}
 }
 
-function addSolitude(data, tabletop) {
+function addPassages(data, tabletop) {
 	for(i = 0; i < data.length; i++) {
 		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
 		
 		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(solitudeMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
+		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(passagesMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
 	}
 }
 
@@ -78,7 +78,7 @@ function addBadlandsRoutes(data, tabletop) {
 	}
 }
 
-function addSolitudeRoutes(data, tabletop) {
+function addPassagesRoutes(data, tabletop) {
 	for(i = 0; i < data.length; i++) {
 		if (!data[i].MarkerX || !data[i].Name || !data[i].MarkerY) { continue; }
 		

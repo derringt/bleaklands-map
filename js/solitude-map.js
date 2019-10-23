@@ -7,7 +7,7 @@ var map = L.map('mapid', {
 });
 
 //Change the URL to reflect where you are hosting your map tiles. Width and Height of original image MUST be defined.
-var layer = L.tileLayer.zoomify('./solitude-map/{g}/{z}-{x}-{y}.jpg', {
+var layer = L.tileLayer.zoomify('./passages-map/{g}/{z}-{x}-{y}.jpg', {
     width: 2048,    // MUST be defined.
     height: 1536,   // MUST be defined.
 }).addTo(map);
@@ -16,7 +16,7 @@ var layer = L.tileLayer.zoomify('./solitude-map/{g}/{z}-{x}-{y}.jpg', {
 map.fitBounds(layer.getBounds());
 
 //Creates the switchable map layers. Change the URL to reflect where you are hosting your map tiles. Width and Height of original image MUST be defined.
-var solitude = L.tileLayer.zoomify('./solitude-map/{g}/{z}-{x}-{y}.jpg', {
+var passages = L.tileLayer.zoomify('./passages-map/{g}/{z}-{x}-{y}.jpg', {
     width: 2048,                                                                                        // MUST be defined.
     height: 1536,                                                                                       // MUST be defined.
     tolerance: 0.9, 
@@ -25,10 +25,10 @@ var solitude = L.tileLayer.zoomify('./solitude-map/{g}/{z}-{x}-{y}.jpg', {
 
 // Creates baseMaps layer and passes which maps to include in the layers control.
 var baseMaps = {
-    "Solitude": solitude,        // The value within quotation marks is the name of the switchable control as it appears on the map. The second value is the layer name.
+    "The Passages": passages,        // The value within quotation marks is the name of the switchable control as it appears on the map. The second value is the layer name.
 };
 
-var solitudeMaps = {
+var passagesMaps = {
 	};
 
 
@@ -45,4 +45,4 @@ function addGroups(data, tabletop) {
 }
 */
 // Creates a switchable layers control from baseMaps and overlayMaps and adds them to map.
-L.control.layers(baseMaps, solitudeMaps).addTo(map);
+L.control.layers(baseMaps, passagesMaps).addTo(map);

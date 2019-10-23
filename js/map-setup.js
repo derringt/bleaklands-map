@@ -28,7 +28,7 @@ var byaza = L.tileLayer.zoomify('./byaza-map/{g}/{z}-{x}-{y}.jpg', {
     tolerance: 0.9, 
 	});
 
-var solitude = L.tileLayer.zoomify('./solitude-map/{g}/{z}-{x}-{y}.jpg', {
+var passages = L.tileLayer.zoomify('./passages-map/{g}/{z}-{x}-{y}.jpg', {
     width: 2048,                                                                                        // MUST be defined.
     height: 1536,                                                                                       // MUST be defined.
     tolerance: 0.9, 
@@ -52,7 +52,7 @@ var baseMaps = {
 	"The Continent of Morra": morra,
 	"The Arkevian Ruins of Byaza": byaza,
 	"The Underground City of Meridiem": meridiem,
-	"Solitude": solitude,
+	"The Passages": passages,
 	};
 
 var poi = L.layerGroup();
@@ -60,7 +60,7 @@ var towns = L.layerGroup();
 var worldtour = L.layerGroup();
 var traderoute = L.layerGroup();
 var byazaMarkers = L.layerGroup();
-var solitudeMarkers = L.layerGroup();
+var passagesMarkers = L.layerGroup();
 var thuvim = L.layerGroup();
 var meridiemMarkers = L.layerGroup();
 var morraMarkers = L.layerGroup();
@@ -68,7 +68,7 @@ var morraMarkers = L.layerGroup();
 map.addLayer(poi);
 map.addLayer(towns);
 
-var allLayers = { poi, towns, byazaMarkers, solitudeMarkers, meridiemMarkers, worldtour, traderoute, thuvim, morraMarkers };
+var allLayers = { poi, towns, byazaMarkers, passagesMarkers, meridiemMarkers, worldtour, traderoute, thuvim, morraMarkers };
 
 var badlandsMarkers = {
 	"Towns" : towns,
@@ -97,8 +97,8 @@ map.on('baselayerchange', function(e) {
 			control.addOverlay(traderoute, "Badlands Trade Routes");
 			control.addOverlay(worldtour, "Badlands World Tour Route");
 			break;
-		case 'Solitude':
-			solitudeMarkers.addTo(map);
+		case 'The Passages':
+			passagesMarkers.addTo(map);
 			control.addOverlay(thuvim, "Thuvim's Expedition");
 			break;
 		case 'The Underground City of Meridiem':
@@ -131,7 +131,7 @@ function swapMap(name) {
 			layerControlElement.getElementsByTagName('input')[3].click();
 			return false;
 			break;
-		case 'Solitude':
+		case 'The Passages':
 			layerControlElement.getElementsByTagName('input')[4].click();
 			return false;
 			break;			
