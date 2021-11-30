@@ -1,18 +1,21 @@
 function init() {
-	Tabletop.init( { 	key: googleDocURL,
-						callback: callback,
-						simpleSheet: false } )
+          Papa.parse(nevriseaGoogleDocURL, {
+          download: true,
+          header: true,
+          complete: function(results) {
+            var nevriseadata = results.data
+            console.log(nevriseadata)
+			addNevrisea(nevriseadata);
+          }
+        })
 }
 
-function callback(data, tabletop) {
-	addBadlands(data["Badlands Markers"].elements, tabletop);
-	addByaza(data["Byaza Markers"].elements, tabletop);
-	addPassages(data["Passages Markers"].elements, tabletop);
-	addMeridiem(data["Meridiem Markers"].elements, tabletop);
-	addBadlandsRoutes(data["Badlands Routes"].elements, tabletop);
-	addPassagesRoutes(data["Passages Routes"].elements, tabletop);
-	addMorra(data["Morra Markers"].elements, tabletop);
-}
+
+//function nevriseaNodes(nevriseadata, tabletop) {
+	
+	//addNevriseaRoutes(data["Nevrisea Routes"].elements, tabletop);
+//}
+
 
 function convertToIntPairArray(dict) {
 	var intPairs = [];
@@ -29,44 +32,21 @@ function convertToIntPairArray(dict) {
 	return intPairs;
 }
 
-function addByaza(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
+
+function addNevrisea(data) {
+	for(const element of data) {
+		console.log(element)
+		if (!element.Y || !element.X || !element.Name) { continue; }
 		
-		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(byazaMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
+		if (element.Color) { iconColor = element.Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
+		if (element.Group) { group = window[element.Group.toLowerCase()]; } else { group = map; }
+		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
 	}
 }
 
-function addBadlands(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
-		
-		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }
-		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-	}
-}
 
-function addPassages(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
-		
-		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(passagesMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-	}
-}
 
-function addMeridiem(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
-		
-		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		L.marker([-data[i].Y,data[i].X], { icon: window[iconColor] }).addTo(meridiemMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-	}
-}
-
-function addBadlandsRoutes(data, tabletop) {
+/*function addNevriseaRoutes(data, tabletop) {
 	for(i = 0; i < data.length; i++) {
 		if (!data[i].MarkerX || !data[i].Name || !data[i].MarkerY) { continue; }
 		
@@ -76,25 +56,4 @@ function addBadlandsRoutes(data, tabletop) {
 		L.polyline(waypointLine, { color: lineColor }).addTo(group);
 		L.marker([-data[i].MarkerY,data[i].MarkerX], { icon: window[ lineColor + 'Icon' ] }).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
 	}
-}
-
-function addPassagesRoutes(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].MarkerX || !data[i].Name || !data[i].MarkerY) { continue; }
-		
-		if (data[i].Color) { lineColor = data[i].Color.toLowerCase(); } else { lineColor = 'blue'; }
-		if (data[i].Group) { group = window[data[i].Group.toLowerCase()]; } else { group = map; }
-		var waypointLine = convertToIntPairArray(data[i]);
-		L.polyline(waypointLine, { color: lineColor }).addTo(group);
-		L.marker([-data[i].MarkerY,data[i].MarkerX], { icon: window[ lineColor + 'Icon' ] }).addTo(group).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-	}
-}
-
-function addMorra(data, tabletop) {
-	for(i = 0; i < data.length; i++) {
-		if (!data[i].Y || !data[i].X || !data[i].Name) { continue; }
-		
-		if (data[i].Color) { iconColor = data[i].Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		L.marker([-data[i].Y,data[i].X], {icon: window[iconColor]}).addTo(morraMarkers).bindPopup('<b>'+data[i].Name+'</b><br>'+data[i].Description);
-	}
-}
+}*/
