@@ -10,10 +10,12 @@ function init() {
         })
 }
 
+
 //function nevriseaNodes(nevriseadata, tabletop) {
 	
 	//addNevriseaRoutes(data["Nevrisea Routes"].elements, tabletop);
 //}
+
 
 function convertToIntPairArray(dict) {
 	var intPairs = [];
@@ -41,6 +43,7 @@ function addNevrisea(data) {
 		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
 	}
 }
+
 
 
 /*function addNevriseaRoutes(data, tabletop) {
