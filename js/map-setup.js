@@ -2,7 +2,7 @@
 var map = L.map('mapid', { 
     crs: L.CRS.Simple, //Set a flat CRS (Coordinate Reference System) projection as we are projecting an image.
 	zoomDelta: 0.25,
-	minZoom: 2.5,
+	minZoom: 2,
 	maxZoom: 5
 	});
 	
@@ -40,7 +40,7 @@ var bleaklandsMarkers = {
 	"Points of Interest": poi,
 	};
 
-var control = L.control.activeLayers(baseMaps, nevriseaMarkers, {collapsed: false});
+var control = L.control.activeLayers(baseMaps, bleaklandsMarkers, {collapsed: false});
 control.addTo(map);
 
 map.on('baselayerchange', function(e) {	
