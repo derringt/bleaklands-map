@@ -37,14 +37,21 @@ function addNevrisea(data) {
 	for(const element of data) {
 		console.log(element)
 		if (!element.Y || !element.X || !element.Name) { continue; }
-		
 		if (element.Color) { iconColor = element.Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
-		if (element.Group) { group = window[element.Group.toLowerCase()]; } else { group = map; }
+		if (element.Group) { group = window['nevrisea' + element.Group.toLowerCase()]; } else { group = map; }
 		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
 	}
 }
 
-
+function addBleaklandsSW(data) {
+	for(const element of data) {
+		console.log(element)
+		if (!element.Y || !element.X || !element.Name) { continue; }
+		if (element.Color) { iconColor = element.Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
+		if (element.Group) { group = window['bleaklandsSW' + element.Group.toLowerCase()]; } else { group = map; }
+		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
+	}
+}
 
 /*function addNevriseaRoutes(data, tabletop) {
 	for(i = 0; i < data.length; i++) {

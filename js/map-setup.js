@@ -7,7 +7,7 @@ var map = L.map('mapid', {
 	});
 	
 //Change the URL to reflect where you are hosting your map tiles. Width and Height of original image MUST be defined.
-var layer = L.tileLayer.zoomify('./the-bleak-lands-map/{g}/{z}-{x}-{y}.jpg', {
+var layer = L.tileLayer.zoomify('./nevrisea-map/{g}/{z}-{x}-{y}.jpg', {
     width: 3200,    // MUST be defined.
     height: 1800,   // MUST be defined.
 	}).addTo(map);
@@ -16,31 +16,52 @@ var layer = L.tileLayer.zoomify('./the-bleak-lands-map/{g}/{z}-{x}-{y}.jpg', {
 map.fitBounds(layer.getBounds());
 
 //Creates the switchable map layers. Change the URL to reflect where you are hosting your map tiles. Width and Height of original image MUST be defined.
-var bleaklands = L.tileLayer.zoomify('./the-bleak-lands-map/{g}/{z}-{x}-{y}.jpg', {
+var nevrisea = L.tileLayer.zoomify('./nevrisea-map/{g}/{z}-{x}-{y}.jpg', {
     width: 3200,                                                                                        // MUST be defined.
     height: 1800,                                                                                       // MUST be defined.
     tolerance: 0.9, 
 	}).addTo(map);
+	
+var nevriseanoterrain = L.tileLayer.zoomify('./nevrisea-no-terrain/{g}/{z}-{x}-{y}.jpg', {
+    width: 3200,                                                                                        // MUST be defined.
+    height: 1800,                                                                                       // MUST be defined.
+    tolerance: 0.9, 
+	});
 
+var bleaklandsSW = L.tileLayer.zoomify('./bleak-lands-map/{g}/{z}-{x}-{y}.jpg', {
+    width: 3200,                                                                                        // MUST be defined.
+    height: 2400,                                                                                       // MUST be defined.
+    tolerance: 0.9, 
+	});
+	
 // Creates baseMaps layer and passes which maps to include in the layers control.
 var baseMaps = {
-    "The Bleak Lands": bleaklands
+    "Nevrisea": nevrisea,
+	"Nevrisea Without Terrain": nevriseanoterrain,
+	"Bleak Lands": bleaklandsSW
 	};
 
-var poi = L.layerGroup();
-var towns = L.layerGroup();
+var nevriseapoi = L.layerGroup();
+var nevriseatowns = L.layerGroup();
+var bleaklandsSWpoi = L.layerGroup();
+var bleaklandsSWtowns = L.layerGroup();
 
-map.addLayer(poi);
-map.addLayer(towns);
+map.addLayer(nevriseapoi);
+map.addLayer(nevriseatowns);
 
-var allLayers = { poi, towns };
+var allLayers = { nevriseapoi, nevriseatowns, bleaklandsSWtowns, bleaklandsSWpoi };
 
-var bleaklandsMarkers = {
-	"Towns" : towns,
-	"Points of Interest": poi,
+var nevriseaMarkers = {
+	"Towns" : nevriseatowns,
+	"Points of Interest": nevriseapoi,
+	};
+	
+var bleaklandsSWMarkers = {
+	"Towns" : bleaklandsSWtowns,
+	"Points of Interest": bleaklandsSWpoi,
 	};
 
-var control = L.control.activeLayers(baseMaps, bleaklandsMarkers, {collapsed: false});
+var control = L.control.activeLayers(baseMaps, nevriseaMarkers, {collapsed: false});
 control.addTo(map);
 
 map.on('baselayerchange', function(e) {	
@@ -49,12 +70,18 @@ map.on('baselayerchange', function(e) {
 		control.removeLayer(allLayers[layerGroup]);
 	}
 	switch(e.name) {
-		case 'The Bleak Lands':
-			poi.addTo(map);
-			towns.addTo(map);
-			control.addOverlay(towns, "Towns");
-			control.addOverlay(poi, "Points of Interest");
+		case 'Nevrisea':
+		case 'Nevrisea Without Terrain':
+			nevriseapoi.addTo(map);
+			nevriseatowns.addTo(map);
+			control.addOverlay(nevriseatowns, "Towns");
+			control.addOverlay(nevriseapoi, "Points of Interest");
 			break;
+		case 'Bleak Lands':
+			bleaklandsSWpoi.addTo(map);
+			bleaklandsSWtowns.addTo(map);
+			control.addOverlay(bleaklandsSWtowns, "Towns");
+			control.addOverlay(bleaklandsSWpoi, "Points of Interest");
 		default:
 	}
 });
@@ -62,10 +89,18 @@ map.on('baselayerchange', function(e) {
 function swapMap(name) {
 	var layerControlElement = document.getElementsByClassName('leaflet-control-layers')[0];
 	switch(name) {
-		case 'The Bleak Lands':
+		case 'Nevrisea':
 			layerControlElement.getElementsByTagName('input')[0].click();
 			return false;
-			break;	
+			break;
+		case 'Nevrisea Without Terrain':
+			layerControlElement.getElementsByTagName('input')[1].click();
+			return false;
+			break;
+		case 'Bleak Lands':
+			layerControlElement.getElementsByTagName('input')[2].click();
+			return false;
+			break;
 		default:
 			return true;
 	}
