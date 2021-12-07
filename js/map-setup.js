@@ -76,12 +76,14 @@ map.on('baselayerchange', function(e) {
 			nevriseatowns.addTo(map);
 			control.addOverlay(nevriseatowns, "Towns");
 			control.addOverlay(nevriseapoi, "Points of Interest");
+			map.setView([-56.25,100],2.5);
 			break;
 		case 'Bleak Lands':
 			bleaklandsSWpoi.addTo(map);
 			bleaklandsSWtowns.addTo(map);
 			control.addOverlay(bleaklandsSWtowns, "Towns");
 			control.addOverlay(bleaklandsSWpoi, "Points of Interest");
+			map.setView([-75,100],2.5);
 		default:
 	}
 });
