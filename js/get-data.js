@@ -4,8 +4,9 @@ function init() {
           header: true,
           complete: function(results) {
             var nevriseadata = results.data
-            console.log(nevriseadata)
+            console.log(nevriseadata);
 			addNevrisea(nevriseadata);
+			addBleaklandsSW(nevriseadata);
           }
         })
 }
@@ -35,22 +36,31 @@ function convertToIntPairArray(dict) {
 
 function addNevrisea(data) {
 	for(const element of data) {
-		console.log(element)
 		if (!element.Y || !element.X || !element.Name) { continue; }
 		if (element.Color) { iconColor = element.Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
 		if (element.Group) { group = window['nevrisea' + element.Group.toLowerCase()]; } else { group = map; }
-		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
+		L.marker(bleaklandsToNevrisea(element.Y,element.X,element.Reference), {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
 	}
 }
 
 function addBleaklandsSW(data) {
 	for(const element of data) {
-		console.log(element)
 		if (!element.Y || !element.X || !element.Name) { continue; }
+		if ((element.Y > 55 || element.Y < 49.5 || element.X < 112 || element.X > 118.5) && (element.Reference != "Bleak Lands")) { continue; }
 		if (element.Color) { iconColor = element.Color.toLowerCase() + 'Icon'; } else { iconColor = 'blackIcon'; }
 		if (element.Group) { group = window['bleaklandsSW' + element.Group.toLowerCase()]; } else { group = map; }
-		L.marker([-element.Y,element.X], {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
+		L.marker(nevriseaToBleaklands(element.Y,element.X,element.Reference), {icon: window[iconColor]}).addTo(group).bindPopup('<b>'+element.Name+'</b><br>'+element.Description);
 	}
+}
+
+function nevriseaToBleaklands(y, x, ref) {
+	if (ref == "Bleak Lands") { return [-y,x]; }
+	else { return [-(y-49.25)/600*14770,((x-111.75)/600*14770)]; }
+}
+
+function bleaklandsToNevrisea(y, x, ref) {
+	if (ref == "Nevrisea") { return [-y,x]; }
+	else { return [-((y/14770*600)+49.25),((x/14770)*600)+111.75]; }
 }
 
 /*function addNevriseaRoutes(data, tabletop) {
